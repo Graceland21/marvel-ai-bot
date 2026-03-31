@@ -1,4 +1,5 @@
-print("Bot is starting...")
+import warnings
+warnings.filterwarnings("ignore")
 import asyncio
 import sys
 import types

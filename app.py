@@ -1,3 +1,4 @@
+print("Bot is starting...")
 import asyncio
 import sys
 import types

@@ -214,6 +214,6 @@ async def main():
         except Exception as e:
             print("Main loop error:", e)
             await asyncio.sleep(10)
-
+print("Main loop running...")
 
 asyncio.run(main())

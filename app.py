@@ -16,8 +16,7 @@ from telegram import Bot
 # =========================
 # 🔐 PUT YOUR REAL VALUES HERE
 # =========================
-TOKEN = "
-8704948433:AAH_4w_2yQbMejLXPXirir8nh_mhLN2hFMU"
+TOKEN = "8704948433:AAH_4w_2yQbMejLXPXirir8nh_mhLN2hFMU"
 CHAT_ID = "-1002497463613"
 
 bot = Bot(token=TOKEN)

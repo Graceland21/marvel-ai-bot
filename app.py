@@ -42,15 +42,37 @@ async def safe_send(message):
 # =========================
 # GET DATA
 # =========================
-def get_prices(pair):
+    def get_prices(pair):
     url = f"https://api.binance.com/api/v3/klines?symbol={pair}&interval=1m&limit=20"
 
     try:
         response = requests.get(url, timeout=10)
         data = response.json()
-        return [float(candle[4]) for candle in data]
+
+        # 🔥 FIX 1: Check if Binance returned error
+        if isinstance(data, dict):
+            print("Binance API error:", data)
+            return None
+
+        # 🔥 FIX 2: Validate structure
+        if not data or not isinstance(data, list):
+            print("Invalid data format:", data)
+            return None
+
+        closes = []
+        for candle in data:
+            if len(candle) > 4:
+                closes.append(float(candle[4]))
+
+        # 🔥 FIX 3: Ensure enough data
+        if len(closes) < 10:
+            print("Not enough data")
+            return None
+
+        return closes
+
     except Exception as e:
-        print("Binance error:", e)
+        print("Binance fetch error:", e)
         return None
 
 

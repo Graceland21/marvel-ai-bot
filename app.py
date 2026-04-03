@@ -19,7 +19,7 @@ from telegram import Bot
 # =========================
 # 🔐 YOUR VALUES
 # =========================
-TOKEN = "8704948433:AAH_4w_2yQbMejLXPXirir8nh_mhLN2hFMU"
+TOKEN = "8704948433:AAHuDzufWTXEvIpZyMirtb-_gxXdVVxbNiI"
 CHAT_ID = "-1002497463613"
 
 bot = Bot(token=TOKEN)

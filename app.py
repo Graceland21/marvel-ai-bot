@@ -43,28 +43,24 @@ async def safe_send(message):
 # GET DATA
 # =========================
     def get_prices(pair):
-    url = f"https://api.binance.com/api/v3/klines?symbol={pair}&interval=1m&limit=20"
+    url = f"https://api.bybit.com/v5/market/kline?category=linear&symbol={pair}&interval=1&limit=20"
 
     try:
         response = requests.get(url, timeout=10)
         data = response.json()
 
-        # 🔥 FIX 1: Check if Binance returned error
-        if isinstance(data, dict):
-            print("Binance API error:", data)
+        # ✅ Check for API error
+        if data.get("retCode") != 0:
+            print("Bybit API error:", data)
             return None
 
-        # 🔥 FIX 2: Validate structure
-        if not data or not isinstance(data, list):
-            print("Invalid data format:", data)
-            return None
+        candles = data["result"]["list"]
 
-        closes = []
-        for candle in data:
-            if len(candle) > 4:
-                closes.append(float(candle[4]))
+        # Bybit returns reversed (latest first) → reverse it
+        candles = candles[::-1]
 
-        # 🔥 FIX 3: Ensure enough data
+        closes = [float(candle[4]) for candle in candles]
+
         if len(closes) < 10:
             print("Not enough data")
             return None
@@ -72,7 +68,7 @@ async def safe_send(message):
         return closes
 
     except Exception as e:
-        print("Binance fetch error:", e)
+        print("Bybit error:", e)
         return None
 
 
